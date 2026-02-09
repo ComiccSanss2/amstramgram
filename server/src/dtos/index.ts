@@ -2,7 +2,7 @@ export interface CreateUserDto {
   email: string;
   mdp: string;
   pseudo: string;
-  status?: "privé" | "public";
+  bPrivate?: boolean;
 }
 
 export interface CreatePostDto {

@@ -3,7 +3,7 @@ export interface User {
   email: string;
   mdp: string;
   pseudo: string;
-  status: "privé" | "public";
+  bPrivate: boolean;
   followers: string[]; //id_user
   following: string[];
   bAdmin: boolean;

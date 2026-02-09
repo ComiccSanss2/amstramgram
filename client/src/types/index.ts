@@ -2,7 +2,7 @@ export interface User {
   id: string;
   email: string;
   pseudo: string;
-  status: "privé" | "public";
+  bPrivate: boolean;
   followers: string[]; //id_user
   following: string[];
   bAdmin: boolean;
