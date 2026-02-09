@@ -12,5 +12,6 @@ export interface CreatePostDto {
 
 export interface CreateCommentDto {
   id_post: string;
+  id_user: string;
   content: string;
 }
