@@ -1,12 +1,12 @@
 # Amstramgram 
 
-Projet de réseau social (type Instagram)[cite: 1, 4]. 
+Projet de réseau social (type Instagram). 
 L'application repose sur une architecture moderne utilisant obligatoirement **TypeScript** pour le Front et le Back.
 
 ##  Stack Technique
-* [cite_start]**Frontend** : React + TypeScript[cite: 6].
-* [cite_start]**Backend** : Node.js + TypeScript[cite: 7].
-* [cite_start]**Gestion de version** : Git.
+**Frontend** : React + TypeScript.
+**Backend** : Node.js + TypeScript.
+**Gestion de version** : Git.
 
 ---
 
