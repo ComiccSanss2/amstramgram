@@ -1,7 +1,7 @@
 # Amstramgram 
 
-[cite_start]Projet de réseau social (type Instagram)[cite: 1, 4]. 
-[cite_start]L'application repose sur une architecture moderne utilisant obligatoirement **TypeScript** pour le Front et le Back.
+Projet de réseau social (type Instagram)[cite: 1, 4]. 
+L'application repose sur une architecture moderne utilisant obligatoirement **TypeScript** pour le Front et le Back.
 
 ##  Stack Technique
 * [cite_start]**Frontend** : React + TypeScript[cite: 6].
@@ -23,6 +23,7 @@ Ouvrez deux terminaux différents :
 ```bash
 cd client
 npm install
+npm run dev
 ```
 
 
@@ -30,6 +31,7 @@ npm install
 ```bash
 cd server
 npm install
+npm run dev
 ```
 
 
