@@ -1,0 +1,24 @@
+export interface User {
+  id: string;
+  email: string;
+  pseudo: string;
+  status: "privé" | "public";
+  followers: string[]; //id_user
+  following: string[];
+  bAdmin: boolean;
+}
+
+export interface Post {
+  id: string;
+  id_user: string;
+  like: number;
+  content: string;
+  date_creation: string;
+}
+
+export interface Comment {
+  id: string;
+  id_post: string;
+  like: number;
+  content: string;
+}
