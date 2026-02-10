@@ -1,42 +1,29 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+#root, .app-home { height: 100%; }
+.app-home { display: flex; background: #fafafa; }
+.app-home main { flex: 1; max-width: 600px; padding: 1.5rem 2rem; overflow: auto; color: #262626; }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.app-header {
+  width: 72px;
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0.5rem;
+  background: #fff;
+  border-right: 1px solid #dbdbdb;
+  overflow-y: auto;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.app-header-bottom {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  color: #262626;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+.app-header-bottom span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
+.app-logout { padding: 0.25rem 0.5rem; border: none; background: none; color: #0095f6; cursor: pointer; font-size: 0.8rem; }
+.app-logout:hover { text-decoration: underline; }
