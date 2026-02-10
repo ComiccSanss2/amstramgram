@@ -27,4 +27,19 @@ export const PostService = {
 
   getAll: (page: number = 1) => 
     api.get<PostsResponse>(`${POSTS}?page=${page}&limit=2`),
+
+  likePost: (id: string, id_user: string) =>
+    api.post<{ post: Post }>(`${POSTS}/like/${id}`, { id_user }),
+
+  unlikePost: (id: string, id_user: string) =>
+    api.post<{ post: Post }>(`${POSTS}/unlike/${id}`, { id_user }),
+
+  createComment: (postId: string, content: string, id_user: string, pseudo: string) =>
+    api.post<Comment>(`${POSTS}/comment/${postId}`, { content, id_user, pseudo }),
+
+  likeComment: (commentId: string, id_user: string) =>
+    api.post<{ comment: Comment }>(`${POSTS}/comment/like/${commentId}`, { id_user }),
+
+  unlikeComment: (commentId: string, id_user: string) =>
+    api.post<{ comment: Comment }>(`${POSTS}/comment/unlike/${commentId}`, { id_user }),
 };

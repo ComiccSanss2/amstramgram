@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PostService } from '../services/post.services';
 import type { Post } from '../types/index';
+import { HeartIcon, MessageCircleIcon } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 export const Feed = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -9,7 +11,11 @@ export const Feed = () => {
   const [error, setError] = useState("");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-
+  const [commentModal, setCommentModal] = useState<{ open: boolean; postId: string | null }>({ open: false, postId: null });
+  const [commentText, setCommentText] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const { user } = useAuth();
+  
   const loadPosts = async (pageNumber: number) => {
     setLoading(true);
     setError("");
@@ -47,6 +53,60 @@ export const Feed = () => {
     loadPosts(nextPage); 
   };
 
+  const handleLike = async (postId: string) => {
+    if (!user) return;
+    
+    const post = posts.find(p => p.id === postId);
+    if (!post) return;
+
+    const isLiked = post.liked_by?.includes(user.id);
+    
+    try {
+      if (isLiked) {
+        const response = await PostService.unlikePost(postId, user.id);
+        // Mettre à jour l'état local avec la réponse du serveur
+        setPosts(prevPosts => 
+          prevPosts.map(p => p.id === postId ? response.post : p)
+        );
+      } else {
+        const response = await PostService.likePost(postId, user.id);
+        // Mettre à jour l'état local avec la réponse du serveur
+        setPosts(prevPosts => 
+          prevPosts.map(p => p.id === postId ? response.post : p)
+        );
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getTotalLikes = (post: Post) => {
+    return post.liked_by?.length || 0;
+  };
+
+  const openCommentModal = (postId: string) => {
+    setCommentModal({ open: true, postId });
+    setCommentText("");
+  };
+
+  const closeCommentModal = () => {
+    setCommentModal({ open: false, postId: null });
+    setCommentText("");
+  };
+
+  const handleSubmitComment = async () => {
+    if (!user || !commentModal.postId || !commentText.trim()) return;
+    setSubmitting(true);
+    try {
+      await PostService.createComment(commentModal.postId, commentText.trim(), user.id, user.pseudo);
+      closeCommentModal();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <div style={{ maxWidth: '600px', margin: '0 auto', paddingBottom: '40px' }}>
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
@@ -68,8 +128,23 @@ export const Feed = () => {
         posts.map((post) => (
           <div key={post.id} className="card" style={{ padding: 0, overflow: 'hidden' }}>
             {/* Header */}
-            <div style={{ padding: '10px 15px', fontWeight: 'bold', borderBottom: '1px solid #efefef' }}>
-              @{post.pseudo}
+            <div style={{ padding: '10px 15px', fontWeight: 'bold', borderBottom: '1px solid #efefef', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                @{post.pseudo}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <button onClick={() => handleLike(post.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <p style={{ margin: 0, padding: 0, fontSize: '1em', color: '#8e8e8e' }}>{getTotalLikes(post)}</p>
+                  <HeartIcon 
+                    fill={post.liked_by?.includes(user?.id || '') ? 'red' : 'none'} 
+                    stroke={post.liked_by?.includes(user?.id || '') ? 'red' : 'black'}
+                    size={20} 
+                  />
+                </button>
+                <button onClick={() => openCommentModal(post.id)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+                  <MessageCircleIcon stroke="black" size={20} />
+                </button>
+              </div>
             </div>
 
             {/* Image */}
@@ -114,6 +189,53 @@ export const Feed = () => {
           <p style={{ color: '#8e8e8e', marginTop: '10px' }}>Vous avez tout vu !</p>
         )}
       </div>
+
+      {/* Modal commentaire */}
+      {commentModal.open && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+          }}
+          onClick={closeCommentModal}
+        >
+          <div
+            className="card"
+            style={{ width: '90%', maxWidth: '400px', padding: '20px' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 style={{ margin: '0 0 15px 0' }}>Commenter</h3>
+            <textarea
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+              placeholder="Écrivez votre commentaire..."
+              style={{
+                width: '100%',
+                minHeight: '100px',
+                padding: '12px',
+                border: '1px solid #ddd',
+                borderRadius: '8px',
+                fontSize: '1em',
+                resize: 'vertical',
+                boxSizing: 'border-box',
+              }}
+            />
+            <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
+              <button onClick={closeCommentModal} className="btn-submit" style={{ flex: 1 }}>
+                Annuler
+              </button>
+              <button onClick={handleSubmitComment} className="btn-submit" style={{ flex: 1 }} disabled={submitting || !commentText.trim()}>
+                {submitting ? 'Envoi...' : 'Poster'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

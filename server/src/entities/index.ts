@@ -12,14 +12,20 @@ export interface User {
 export interface Post {
   id: string;
   id_user: string;
-  like: number;
+  pseudo: string;
+  liked_by: string[]; //id_user
   content: string;
-  date_creation: Date | string;
+  image?: string; 
+  date_creation: string;
 }
+
 
 export interface Comment {
   id: string;
   id_post: string;
-  like: number;
+  id_user: string;
+  pseudo: string;
+  liked_by: string[]; //id_user
   content: string;
+  date_creation: string;
 }

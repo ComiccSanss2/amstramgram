@@ -11,7 +11,7 @@ export interface User {
 export interface Post {
   id: string;
   id_user: string;
-  like: number;
+  liked_by: string[]; //id_user
   content: string;
   image?: string; 
   date_creation: string;
@@ -21,6 +21,9 @@ export interface Post {
 export interface Comment {
   id: string;
   id_post: string;
-  like: number;
+  id_user: string;
+  pseudo: string;
+  liked_by: string[];
   content: string;
+  date_creation: string;
 }
