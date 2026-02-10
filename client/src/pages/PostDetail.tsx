@@ -28,13 +28,6 @@ export const PostDetail = () => {
         <hr style={{ margin: '20px 0', border: '0', borderTop: '1px solid #eee' }} />
         <small>ID: {data.post.id} • Likes: {data.post.like}</small>
       </div>
-
-      {/* Bouton pour en créer un autre */}
-      <div style={{ textAlign: 'center', marginTop: '20px' }}>
-        <Link to="/create">
-          <button style={{ width: '100%' }}>Créer un autre post</button>
-        </Link>
-      </div>
     </div>
   );
 };

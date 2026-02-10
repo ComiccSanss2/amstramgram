@@ -1,19 +1,26 @@
-import type { User } from "../types";
-
 const API = "http://localhost:3000";
 
-async function post(path: string, data: object): Promise<User> {
-  const res = await fetch(API + path, {
-    method: "POST",
+async function request<T>(
+  path: string,
+  options?: { method?: "GET" | "POST"; body?: object }
+): Promise<T> {
+  const init: RequestInit = {
+    method: options?.method ?? "GET",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  const json = await res.json();
-  if (!res.ok) throw new Error(json.error ?? "Erreur");
-  return json;
+  };
+  if (options?.body) {
+    init.body = JSON.stringify(options.body);
+  }
+  const res = await fetch(API + path, init);
+  let json: unknown;
+  try {
+    json = await res.json();
+  } catch {
+    throw new Error("Réponse serveur invalide.");
+  }
+  if (!res.ok) throw new Error((json as { error?: string })?.error ?? "Erreur");
+  return json as T;
 }
 
-export const register = (data: { email: string; mdp: string; pseudo: string; bPrivate?: boolean }) =>
-  post("/auth/register", data);
-
-export const login = (data: { email: string; mdp: string }) => post("/auth/login", data);
+export const get = <T>(path: string) => request<T>(path, { method: "GET" });
+export const post = <T>(path: string, data: object) => request<T>(path, { method: "POST", body: data });

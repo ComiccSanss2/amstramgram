@@ -1,16 +1,28 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { CreatePost } from './pages/CreatePost';
-import { PostDetail } from './pages/PostDetail';
-import { Feed } from './pages/Feed';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "./contexts/AuthContext";
+import AuthPage from "./pages/AuthPage";
+import { AppLayout } from "./components/AppLayout";
+import { CreatePost } from "./pages/CreatePost";
+import { PostDetail } from "./pages/PostDetail";
+import { Feed } from "./pages/Feed";
+import "./App.css";
 
 function App() {
+  const { user } = useAuth();
+
+  if (!user) {
+    return <AuthPage />;
+  }
+
   return (
     <BrowserRouter>
       <Routes>
-        {/* La page d'accueil est maintenant le Feed */}
-        <Route path="/" element={<Feed />} />
-        <Route path="/create" element={<CreatePost />} />
-        <Route path="/post/:id" element={<PostDetail />} />
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<Feed />} />
+          <Route path="/create" element={<CreatePost />} />
+          <Route path="/post/:id" element={<PostDetail />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

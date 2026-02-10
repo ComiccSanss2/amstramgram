@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import { PostService } from '../services/post.services.js';
 
 export const CreatePost = () => {
+  const { user } = useAuth();
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  const MOCK_USER_ID = "user_test_123"; 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,11 +17,13 @@ export const CreatePost = () => {
       return;
     }
 
+    if (!user) return;
+
     try {
-      const newPost = await PostService.create(content, MOCK_USER_ID);
+      const newPost = await PostService.create(content, user.id, user.pseudo);
       navigate(`/post/${newPost.id}`);
     } catch (err) {
-      setError("Erreur API : Impossible de publier."); 
+      setError(err instanceof Error ? err.message : "Erreur lors de la publication.");
     }
   };
 
@@ -36,7 +38,7 @@ export const CreatePost = () => {
           style={{ width: '100%', height: '100px', padding: '10px' }}
         />
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit" disabled={!content.trim()} style={{ marginTop: '10px' }}>
+        <button type="submit" className="btn-submit" disabled={!content.trim()}>
           Publier
         </button>
       </form>

@@ -72,7 +72,7 @@ export default function AuthPage() {
               Compte privé
             </label>
           )}
-          <button type="submit" className="auth-submit">
+          <button type="submit" className="btn-submit">
             {isLogin ? "Se connecter" : "S'inscrire"}
           </button>
         </form>

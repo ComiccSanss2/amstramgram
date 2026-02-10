@@ -13,3 +13,7 @@ export function addUser(user: User) {
 export function findByEmail(email: string): User | undefined {
   return byEmail.get(email.toLowerCase());
 }
+
+export function findById(id: string): User | undefined {
+  return byId.get(id);
+}

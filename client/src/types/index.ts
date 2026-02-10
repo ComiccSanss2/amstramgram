@@ -14,6 +14,7 @@ export interface Post {
   like: number;
   content: string;
   date_creation: string;
+  pseudo?: string;
 }
 
 export interface Comment {
