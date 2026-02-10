@@ -1,15 +1,61 @@
 :root {
-  font-family: system-ui, sans-serif;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
+  font-weight: 400;
+  background-color: #f0f2f5; 
+  color: #1c1e21;
 }
 
-html, body {
+body {
   margin: 0;
-  height: 100%;
-  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+  max-width: 600px; 
+  margin: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 button {
   font-family: inherit;
+  background-color: #0095f6; 
+  color: white;
   cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+button:hover {
+  background-color: #0077c5;
+}
+
+button:disabled {
+  background-color: #b2dffc;
+  cursor: not-allowed;
+}
+
+textarea {
+  width: 100%;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  padding: 10px;
+  font-family: inherit;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+a {
+  color: #0095f6;
+  text-decoration: none;
+  font-weight: 600;
 }

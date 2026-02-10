@@ -1,23 +1,19 @@
-import { useAuth } from "./contexts/AuthContext";
-import AuthPage from "./pages/AuthPage";
-import "./App.css";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { CreatePost } from './pages/CreatePost';
+import { PostDetail } from './pages/PostDetail';
+import { Feed } from './pages/Feed';
 
-export default function App() {
-  const { user, logout } = useAuth();
-  if (!user) return <AuthPage />;
+function App() {
   return (
-    <div className="app-home">
-      <header className="app-header">
-        <div className="app-header-bottom">
-          <span>{user.pseudo}</span>
-          <button type="button" onClick={logout} className="app-logout">
-            Déconnexion
-          </button>
-        </div>
-      </header>
-      <main>
-        <p>Bienvenue, {user.pseudo}.</p>
-      </main>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* La page d'accueil est maintenant le Feed */}
+        <Route path="/" element={<Feed />} />
+        <Route path="/create" element={<CreatePost />} />
+        <Route path="/post/:id" element={<PostDetail />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
+
+export default App;

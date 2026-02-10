@@ -1,24 +1,18 @@
 import express from "express";
-import authRoutes from "./routes/auth.js";
+import cors from "cors"; 
+import postRoutes from "./routes/post.routes.js"; 
 
 const app = express();
 const PORT = 3000;
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  if (req.method === "OPTIONS") {
-    res.sendStatus(204);
-    return;
-  }
-  next();
-});
-app.use(express.json());
+app.use(cors()); 
+app.use(express.json()); 
 
 app.get("/", (_req, res) => {
-  res.json({ ok: true, message: "Amstramgram API" });
+  res.json({ ok: true, message: "Amstramgram API ready!" });
 });
-app.use("/auth", authRoutes);
+
+app.use("/api/posts", postRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
