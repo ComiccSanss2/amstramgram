@@ -1,9 +1,11 @@
 import { Router } from "express";
+import jwt from "jsonwebtoken";
 import type { User } from "../entities/index.js";
 import type { CreateUserDto } from "../dtos/index.js";
 import { addUser, findByEmail } from "../store/users.js";
 
 const router = Router();
+const SECRET = process.env.JWT_SECRET || "amstramgram-secret";
 
 router.post("/register", (req, res) => {
   const body = req.body as CreateUserDto;
@@ -26,7 +28,9 @@ router.post("/register", (req, res) => {
     following: [],
     bAdmin: false,
   };
-  res.status(201).json(addUser(user));
+  addUser(user);
+  const token = jwt.sign({ userId: user.id }, SECRET, { expiresIn: "7d" });
+  res.status(201).json({ token });
 });
 
 router.post("/login", (req, res) => {
@@ -40,8 +44,8 @@ router.post("/login", (req, res) => {
     res.status(401).json({ error: "Identifiants incorrects" });
     return;
   }
-  const { mdp: _, ...pub } = user;
-  res.json(pub);
+  const token = jwt.sign({ userId: user.id }, SECRET, { expiresIn: "7d" });
+  res.json({ token });
 });
 
 export default router;

@@ -1,8 +1,8 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { User } from "../types";
 import { AuthService } from "../services/auth.service";
 
-const KEY = "amstramgram_user";
+const TOKEN_KEY = "amstramgram_token";
 
 type Auth = {
   user: User | null;
@@ -15,24 +15,25 @@ type Auth = {
 
 const AuthContext = createContext<Auth | null>(null);
 
-function loadUser(): User | null {
-  try {
-    const r = localStorage.getItem(KEY);
-    return r ? (JSON.parse(r) as User) : null;
-  } catch {
-    return null;
-  }
-}
-
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(loadUser);
+  const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  async function doAuth(fn: () => Promise<User>) {
+  useEffect(() => {
+    if (!localStorage.getItem(TOKEN_KEY)) return;
+    AuthService.me()
+      .then(setUser)
+      .catch(() => {
+        localStorage.removeItem(TOKEN_KEY);
+      });
+  }, []);
+
+  async function doAuth(fn: () => Promise<{ token: string }>) {
     setError(null);
-    const u = await fn();
+    const { token } = await fn();
+    localStorage.setItem(TOKEN_KEY, token);
+    const u = await AuthService.me();
     setUser(u);
-    localStorage.setItem(KEY, JSON.stringify(u));
     window.history.replaceState(null, "", "/");
   }
 
@@ -50,7 +51,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem(KEY);
+    localStorage.removeItem(TOKEN_KEY);
   };
 
   return (
