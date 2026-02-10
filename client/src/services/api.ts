@@ -1,6 +1,6 @@
 import type { User } from "../types";
 
-const API = "/api";
+const API = "http://localhost:3000";
 
 async function post(path: string, data: object): Promise<User> {
   const res = await fetch(API + path, {
