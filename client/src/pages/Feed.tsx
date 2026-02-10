@@ -19,7 +19,7 @@ export const Feed = () => {
       ) : (
         posts.map((post) => (
           <div key={post.id} className="card">
-            <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>{post.pseudo}</div>
+            <Link to={`/profile/${post.id_user}`} style={{ fontWeight: "bold", textDecoration: "none", marginBottom: '5px' }}>{post.pseudo} </Link>
             <p>{post.content}</p>
             <div style={{ marginTop: '10px', fontSize: '0.9em', color: '#666', display: 'flex', justifyContent: 'space-between' }}>
               <span>{new Date(post.date_creation).toLocaleDateString()}</span>

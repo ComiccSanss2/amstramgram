@@ -14,7 +14,7 @@ export function LeftMenu() {
         <Link to="/create" className="app-menu-link" title="Créer un post">
           +
         </Link>
-        <Link to="/profile" className="app-menu-link" title="Profil">
+        <Link to={`/profile/${user.id}`} className="app-menu-link" title="Profil">
           Profil
         </Link>
       </div>

@@ -2,49 +2,87 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { ProfilService } from "../services/profil.service";
 import type { User } from "../types";
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import type { Post } from '../types/index';
 import { PostService } from '../services/post.services.js';
 
 
 export default function ProfilePage() {
   const { user } = useAuth();
+  const { id } = useParams();
   const [profile, setProfile] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
-
+ const [loading, setLoading] = useState(true);
+  const profileId = id ?? user?.id ?? "";
   useEffect(() => {
-  if (!user) return;
+  if (!user || !profileId) return;
 
-  ProfilService.getById(user.id)
-    .then(setProfile)
-    .then(() => PostService.getAll())
-    .then((allPosts) => {
-      const userPosts = allPosts.filter((post) => post.id_user === user.id);
-      setPosts(userPosts);
-    })
-    .catch((e) => setError(e instanceof Error ? e.message : "Erreur"));
-}, [user]);
+  const load = async () =>{
+    try{
+      setLoading(true);
+      setError(null);
 
-  if (!user) return <p>Veuillez vous connecter.</p>;
+      const loadedProfile = await ProfilService.getById(profileId);
+      setProfile(loadedProfile);
+
+      const isMyProfile = profileId === user.id;
+      const isFollower = loadedProfile.followers.includes(user.id);
+
+      const canSeePosts = isMyProfile || !loadedProfile.bPrivate || isFollower;
+
+      if (canSeePosts){
+        const allPosts = await PostService.getAll();
+        const profilePosts = allPosts.filter((posts) => posts.id_user === profileId)
+        setPosts(profilePosts);
+      }else{
+        setPosts([]);
+      }
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Erreur");
+    } finally {
+      setLoading(false);
+    }
+  };
+  load();
+}, [user, profileId]);
+
+  if (!user) return <p> Veuillez vous connecter.</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
-  if (!profile) return <p>Chargement...</p>;
+  if (loading || !profile) return <p>Chargement...</p>;
+
+  const isMyProfile = profileId === user.id
+  const isFollower = profile.followers.includes(user.id)
+  const isPrivate = profile.bPrivate
+  const canSeePosts = isMyProfile || !isPrivate || isFollower;
 
   return (
-    
     <div className="profile-container">
       <section className="profile-info">
         <h2>{profile.pseudo}</h2>
-        <p>{profile.email}</p>
+
+        {isMyProfile && <p>{profile.email}</p>}
+
         <div className="stats">
           <span>{profile.followers.length} abonnés</span>
           <span>{profile.following.length} abonnements</span>
         </div>
+
+        {!isMyProfile && (
+          <p style={{ marginTop: 8, color: "#666" }}>
+            {isPrivate ? "Compte privé" : "Compte public"}
+          </p>
+        )}
       </section>
       <hr />
       <section className="profile-posts">
-        <h3>Mes posts</h3>
-        {posts.length === 0 ? (
+        <h3>{isMyProfile ? "Mes posts" : "Posts"}</h3>
+
+        {!canSeePosts ? (
+          <div className="card">
+            Ce compte est privé. Abonne-toi pour voir ses posts.
+          </div>
+        ) : posts.length === 0 ? (
         <div className="card">Pas encore de posts.</div>
       ) : (
         posts.map((post) => (
