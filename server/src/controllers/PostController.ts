@@ -40,6 +40,12 @@ export const PostController = {
   },
 
   getAll: (_req: Request, res: Response) => {
+    const userId = _req.query.userId as string;
+
+    if (userId) {
+      const userPosts = posts.filter((p) => p.id_user === userId);
+      return res.json(userPosts);
+    }
     res.json(posts);
   },
 };
