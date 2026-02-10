@@ -1,4 +1,4 @@
-import type { User } from "../types";
+import type { User, Post } from "../types";
 
 const API = "http://localhost:3000";
 
@@ -17,3 +17,17 @@ export const register = (data: { email: string; mdp: string; pseudo: string; bPr
   post("/auth/register", data);
 
 export const login = (data: { email: string; mdp: string }) => post("/auth/login", data);
+
+export const getMyProfile = async (userId: string): Promise<{ user: User; posts: Post[] }> => {
+
+  const response = await fetch(`${API}/posts?userId=${userId}`);
+  if (!response.ok) {
+    throw new Error("Could not fetch profile data");
+  }
+  const posts = await response.json();
+  
+  return {
+    posts: posts.filter((p: Post) => p.id_user === userId),
+    
+  } as any; 
+};
