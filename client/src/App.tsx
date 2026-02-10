@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { AppLayout } from "./components/AppLayout";
-
-// Tes pages
 import AuthPage from "./pages/AuthPage";
 import { CreatePost } from "./pages/CreatePost";
 import { PostDetail } from "./pages/PostDetail";
@@ -11,7 +9,6 @@ import ProfilePage from "./pages/ProfilePage";
 
 import "./App.css";
 
-//
 const AppRoutes = () => {
   const { user } = useAuth(); 
   if (!user) {

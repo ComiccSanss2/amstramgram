@@ -17,7 +17,7 @@ export const PostDetail = () => {
 
   return (
     <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
-      {/* Barre de navigation simple */}
+      {/* Barre de navigation */}
       <div style={{ marginBottom: '20px' }}>
         <Link to="/" style={{ textDecoration: 'none', color: '#0095f6', fontWeight: 'bold' }}> 
           &larr; Retour au Feed
@@ -30,7 +30,7 @@ export const PostDetail = () => {
           @{data.post.pseudo || "Anonyme"}
         </h2>
 
-        {/* --- IMAGE (Ajouté ici) --- */}
+        {/* --- IMAGE --- */}
         {data.post.image && (
           <img 
             src={data.post.image} 

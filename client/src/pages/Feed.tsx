@@ -72,7 +72,7 @@ export const Feed = () => {
               @{post.pseudo}
             </div>
 
-            {/* Image (Si présente) */}
+            {/* Image */}
             {post.image && (
               <img 
                 src={post.image} 
