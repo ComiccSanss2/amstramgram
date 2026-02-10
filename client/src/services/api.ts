@@ -1,5 +1,3 @@
-import type { User, Post } from "../types";
-
 const API = "http://localhost:3000";
 
 async function request<T>(

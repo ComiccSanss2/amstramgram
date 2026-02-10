@@ -5,6 +5,7 @@ import { AppLayout } from "./components/AppLayout";
 import { CreatePost } from "./pages/CreatePost";
 import { PostDetail } from "./pages/PostDetail";
 import { Feed } from "./pages/Feed";
+import ProfilePage from "./pages/ProfilePage";
 import "./App.css";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<Feed />} />
           <Route path="/create" element={<CreatePost />} />
           <Route path="/post/:id" element={<PostDetail />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
