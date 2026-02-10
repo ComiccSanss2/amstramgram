@@ -13,6 +13,7 @@ export interface Post {
   id_user: string;
   like: number;
   content: string;
+  image?: string; 
   date_creation: string;
   pseudo?: string;
 }

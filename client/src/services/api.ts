@@ -1,12 +1,16 @@
 const API = "http://localhost:3000";
+const TOKEN_KEY = "amstramgram_token";
 
 async function request<T>(
   path: string,
   options?: { method?: "GET" | "POST"; body?: object }
 ): Promise<T> {
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  const token = localStorage.getItem(TOKEN_KEY);
+  if (token) headers["Authorization"] = `Bearer ${token}`;
   const init: RequestInit = {
     method: options?.method ?? "GET",
-    headers: { "Content-Type": "application/json" },
+    headers,
   };
   if (options?.body) {
     init.body = JSON.stringify(options.body);
