@@ -37,7 +37,7 @@ npm run dev
 
 ## Pour se connecter en ligne (meme reseau seulement)
 
-- Aller sans api.ts
+- Aller dans api.ts
 - Changer la ligne : 
 
 ```bash
