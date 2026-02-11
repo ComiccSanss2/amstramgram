@@ -8,5 +8,25 @@
     "followers": [],
     "following": [],
     "bAdmin": false
+  },
+  {
+    "id": "01c376d2-802f-45a5-9e08-a4366528a4ef",
+    "email": "a@a.com",
+    "mdp": "a",
+    "pseudo": "abonnetwa",
+    "bPrivate": true,
+    "followers": [],
+    "following": [],
+    "bAdmin": false
+  },
+  {
+    "id": "bc7c1715-b4de-41dc-aba3-4e9db6c719c0",
+    "email": "b@b.com",
+    "mdp": "b",
+    "pseudo": "desabone twa",
+    "bPrivate": false,
+    "followers": [],
+    "following": [],
+    "bAdmin": false
   }
 ]

@@ -65,6 +65,22 @@ export default function ProfilePage() {
   load();
 }, [user, profileId]);
 
+const hanleFollow = async () => {
+  if (!user || !profile) return;
+
+  try {
+    if (isFollower) {
+      await ProfilService.unfollow(profile.id, user.id);
+      setProfile((prev) => prev?({...prev,followers: prev.followers.filter(id => id !== user.id)}):null);
+    } else{
+      await ProfilService.follow(profile.id,user.id);
+      setProfile((prev) => prev?({...prev,followers: [...prev.followers, user.id]}):null);
+    }
+  } catch (e) {
+    console.error("Erreur follow/unfollow",e);
+  }
+};
+
   if (!user) return <p> Veuillez vous connecter.</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
   if (loading || !profile) return <p>Chargement...</p>;
@@ -93,7 +109,7 @@ export default function ProfilePage() {
                   <button className="btn secondary">Edit</button>
                 ) : (
                   <>
-                    <button className="btn primary">Follow</button>
+                    <button className={`btn ${isFollower ? 'secondary' : 'primary'}`} onClick={hanleFollow}>{isFollower ? "Unfollow" : "Follow"}</button>
                     <button className="btn secondary">Message</button>
                   </>
                 )}

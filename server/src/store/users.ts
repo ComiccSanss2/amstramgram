@@ -47,3 +47,30 @@ export function findByEmail(email: string): User | undefined {
 export function findById(id: string): User | undefined {
   return byId.get(id);
 }
+
+export function followUser(followerId: string, targetId: string): boolean {
+  const follower = byId.get(followerId);
+  const target = byId.get(targetId);
+
+  if (!follower || !target || followerId === targetId) return false;
+
+  if (!follower.following.includes(targetId)){
+    follower.following.push(targetId);
+  }
+  if(!target.followers.includes(followerId)){
+    target.followers.push(followerId)
+  }
+return true;
+}
+
+export function unfollowUser(followerId: string, targetId: string): boolean {
+  const follower = byId.get(followerId);
+  const target = byId.get(targetId);
+
+  if (!follower || !target) return false;
+
+  follower.following = follower.following.filter((id) => id != targetId);
+  target.followers = target.followers.filter((id) => id != targetId);
+
+  return true;
+}
