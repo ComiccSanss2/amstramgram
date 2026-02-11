@@ -3,7 +3,7 @@ const TOKEN_KEY = "amstramgram_token";
 
 async function request<T>(
   path: string,
-  options?: { method?: "GET" | "POST"; body?: object }
+  options?: { method?: "GET" | "POST" | "DELETE"; body?: object }
 ): Promise<T> {
   const headers: Record<string, string> = { "Content-Type": "application/json" };
   const token = localStorage.getItem(TOKEN_KEY);
@@ -16,6 +16,7 @@ async function request<T>(
     init.body = JSON.stringify(options.body);
   }
   const res = await fetch(API + path, init);
+  if (res.status === 204) return undefined as T;
   let json: unknown;
   try {
     json = await res.json();
@@ -28,3 +29,4 @@ async function request<T>(
 
 export const get = <T>(path: string) => request<T>(path, { method: "GET" });
 export const post = <T>(path: string, data: object) => request<T>(path, { method: "POST", body: data });
+export const del = <T>(path: string) => request<T>(path, { method: "DELETE" });

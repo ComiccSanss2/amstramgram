@@ -10,6 +10,7 @@
     "bAdmin": false
   },
   {
+<<<<<<< HEAD
     "id": "01c376d2-802f-45a5-9e08-a4366528a4ef",
     "email": "a@a.com",
     "mdp": "a",
@@ -24,6 +25,12 @@
     "email": "b@b.com",
     "mdp": "b",
     "pseudo": "desabone twa",
+=======
+    "id": "c9b99d4e-43a8-4ea0-91d7-66459249e7da",
+    "email": "qsdfgh@gmail.com",
+    "mdp": "qsdfgh",
+    "pseudo": "qsdfgh",
+>>>>>>> main
     "bPrivate": false,
     "followers": [],
     "following": [],

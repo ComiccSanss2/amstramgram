@@ -37,6 +37,23 @@ export const PostController = {
     return res.json({ post, comments: postComments });
   },
 
+  delete: (req: Request, res: Response) => {
+    const userId = (req as Request & { userId: string }).userId;
+    const post = posts.find((p) => p.id === req.params.id);
+    if (!post) return bad(res, "Post non trouvé", 404);
+    if (post.id_user !== userId) return res.status(403).json({ error: "Pas le propriétaire du post" });
+    const idx = posts.indexOf(post);
+    if (idx !== -1) posts.splice(idx, 1);
+    const postId = post.id;
+    for (let i = comments.length - 1; i >= 0; i--) {
+      const c = comments[i];
+      if (c?.id_post === postId) comments.splice(i, 1);
+    }
+    savePosts();
+    saveComments();
+    return res.status(204).send();
+  },
+
 
   getAll: (req: Request, res: Response) => {
     const page = parseInt(req.query.page as string) || 1;
@@ -138,5 +155,16 @@ export const PostController = {
     comment.liked_by = comment.liked_by.filter(id => id !== id_user);
     saveComments();
     return res.status(200).json({ comment });
-  }
+  },
+
+  deleteComment: (req: Request, res: Response) => {
+    const userId = (req as Request & { userId: string }).userId;
+    const comment = comments.find(c => c.id === req.params.id);
+    if (!comment) return bad(res, "Commentaire non trouvé", 404);
+    if (comment.id_user !== userId) return res.status(403).json({ error: "Pas l'auteur du commentaire" });
+    const idx = comments.indexOf(comment);
+    if (idx !== -1) comments.splice(idx, 1);
+    saveComments();
+    return res.status(204).send();
+  },
 };
