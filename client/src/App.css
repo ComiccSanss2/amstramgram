@@ -1,11 +1,14 @@
 #root, .app-home { height: 100%; }
-.app-home { display: flex; background: #fafafa; }
+.app-home { display: flex; background: #fafafa; max-height: 100vh; overflow: hidden; }
 .app-main-wrap { flex: 1; display: flex; justify-content: center; min-width: 0; }
 .app-home main { width: 100%; max-width: 600px; padding: 1.5rem 2rem; overflow: auto; color: #262626; }
 
 .app-header {
-  width: 72px;
-  height: 100%;
+  width: 75px;
+  min-height: 100vh;
+  min-height: 100svh;
+  max-height: 100vh;
+  max-height: 100svh;
   flex-shrink: 0;
   align-self: stretch;
   display: flex;
@@ -18,6 +21,7 @@
 }
 .app-header-center {
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
