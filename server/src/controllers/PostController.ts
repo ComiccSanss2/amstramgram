@@ -1,8 +1,6 @@
 import type { Request, Response } from 'express';
-import type { Post, Comment } from '../entities/index.ts';
-
-const posts: Post[] = [];
-const comments: Comment[] = [];
+import type { Post, Comment } from '../entities/index.js';
+import { posts, comments, savePosts, saveComments } from '../store/posts.js';
 
 function bad(res: Response, msg: string, status = 400) {
   return res.status(status).json({ error: msg });
@@ -27,6 +25,7 @@ export const PostController = {
     };
 
     posts.unshift(newPost);
+    savePosts();
     return res.status(201).json(newPost);
   },
 
@@ -72,6 +71,7 @@ export const PostController = {
       return bad(res, "Post déjà liké", 400);
     }
     post.liked_by.push(id_user);
+    savePosts();
     return res.status(200).json({ post });
   },
 
@@ -84,6 +84,7 @@ export const PostController = {
       return bad(res, "Post non liké", 400);
     }
     post.liked_by = post.liked_by.filter(id => id !== id_user);
+    savePosts();
     return res.status(200).json({ post });
   },
 
@@ -109,6 +110,7 @@ export const PostController = {
     };
 
     comments.push(newComment);
+    saveComments();
     return res.status(201).json(newComment);
   },
 
@@ -121,6 +123,7 @@ export const PostController = {
       return bad(res, "Commentaire déjà liké", 400);
     }
     comment.liked_by.push(id_user);
+    saveComments();
     return res.status(200).json({ comment });
   },
 
@@ -133,6 +136,7 @@ export const PostController = {
       return bad(res, "Commentaire non liké", 400);
     }
     comment.liked_by = comment.liked_by.filter(id => id !== id_user);
+    saveComments();
     return res.status(200).json({ comment });
   }
 };
