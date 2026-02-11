@@ -88,7 +88,7 @@ export const PostDetail = () => {
         {/* Header */}
         <div style={{ padding: '10px 15px', fontWeight: 'bold', borderBottom: '1px solid #efefef', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                @{data.post.pseudo}
+              <Link to={`/profile/${data.post.id_user}`} style={{fontWeight: 'bold'}}>@{data.post.pseudo} </Link>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <button onClick={() => handleLikePost()} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}>
