@@ -35,5 +35,37 @@ npm run dev
 ```
 
 
+## Pour se connecter en ligne (meme reseau seulement)
+
+- Aller sans api.ts
+- Changer la ligne : 
+
+```bash
+const API = "http://localhost:3000";
+
+```
+En
+
+```bash
+const API = "http://adresseIP:3000";
+```
+
+Une fois que ça a été fait,
+**Lancez :**
+```bash
+coté client: npm run dev -- --host
+coté server: npm run dev
+```
+
+**Coté users qui vont se connecter :**
+Taper l'ip donné par le host dans le navigateur et have fun !
+
+
+
+
+
+
+
+
 
 
