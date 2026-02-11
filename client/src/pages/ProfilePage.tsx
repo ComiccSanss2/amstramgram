@@ -13,8 +13,10 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
- const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+
   const profileId = id ?? user?.id ?? "";
+
   useEffect(() => {
   if (!user || !profileId) return;
 
@@ -28,16 +30,31 @@ export default function ProfilePage() {
 
       const isMyProfile = profileId === user.id;
       const isFollower = loadedProfile.followers.includes(user.id);
-
       const canSeePosts = isMyProfile || !loadedProfile.bPrivate || isFollower;
 
-      if (canSeePosts){
-        const allPosts = await PostService.getAll();
-        const profilePosts = allPosts.filter((posts) => posts.id_user === profileId)
-        setPosts(profilePosts);
-      }else{
+      if (!canSeePosts){
         setPosts([]);
+        return;
       }
+
+      
+      let page = 1;
+      let hasMore = true;
+
+      const allPosts: Post[] =[];
+
+      while (hasMore) {
+        const res = await PostService.getAll(page);
+
+        const pagePosts: Post[] = res?.data ?? [];
+        allPosts.push(...pagePosts);
+
+        hasMore = Boolean(res?.meta?.hasMore);
+        page += 1;
+      }
+      const profilPosts = allPosts.filter((post) => post.id_user === profileId);
+      setPosts(profilPosts)
+
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Erreur");
     } finally {
@@ -65,6 +82,7 @@ export default function ProfilePage() {
 
         <div className="stats">
           <span>{profile.followers.length} abonnés</span>
+          <span> · </span>
           <span>{profile.following.length} abonnements</span>
         </div>
 
@@ -74,7 +92,9 @@ export default function ProfilePage() {
           </p>
         )}
       </section>
+
       <hr />
+      
       <section className="profile-posts">
         <h3>{isMyProfile ? "Mes posts" : "Posts"}</h3>
 
@@ -86,11 +106,29 @@ export default function ProfilePage() {
         <div className="card">Pas encore de posts.</div>
       ) : (
         posts.map((post) => (
-          <div key={post.id} className="card">
-            <p>{post.content}</p>
-            <div style={{ marginTop: '10px', fontSize: '0.9em', color: '#666', display: 'flex', justifyContent: 'space-between' }}>
-              <span>{new Date(post.date_creation).toLocaleDateString()}</span>
-              <Link to={`/post/${post.id}`}>Voir détails &rarr;</Link>
+          <div key={post.id} className="card" style={{ padding: 0, overflow: 'hidden' }}>
+            {/* Header */}
+            <Link to={`/profile/${post.id_user}`} style={{ padding: '10px 15px', fontWeight: 'bold', borderBottom: '1px solid #efefef' }}>@{post.pseudo} </Link>
+
+            {/* Image */}
+            {post.image && (
+              <img 
+                src={post.image} 
+                alt="Post content" 
+                style={{ width: '100%', display: 'block', objectFit: 'cover' }} 
+              />
+            )}
+
+            {/* Contenu */}
+            <div style={{ padding: '15px' }}>
+              <p style={{ whiteSpace: 'pre-wrap', margin: '0 0 10px 0' }}>{post.content}</p>
+              
+              <div style={{ fontSize: '0.85em', color: '#8e8e8e', display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+                <span>{new Date(post.date_creation).toLocaleDateString()}</span>
+                <Link to={`/post/${post.id}`} style={{ color: '#0095f6', textDecoration: 'none', fontWeight: 'bold' }}>
+                  Voir détails &rarr;
+                </Link>
+              </div>
             </div>
           </div>
         ))
