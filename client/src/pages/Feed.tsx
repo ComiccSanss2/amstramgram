@@ -126,11 +126,12 @@ export const Feed = () => {
         </div>
       ) : (
         posts.map((post) => (
+
           <div key={post.id} className="card" style={{ padding: 0, overflow: 'hidden' }}>
             {/* Header */}
             <div style={{ padding: '10px 15px', fontWeight: 'bold', borderBottom: '1px solid #efefef', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                @{post.pseudo}
+              <Link to={`/profile/${post.id_user}`} style={{ padding: '10px 15px', fontWeight: 'bold', borderBottom: '1px solid #efefef' }}>@{post.pseudo} </Link>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <button onClick={() => handleLike(post.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}>

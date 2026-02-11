@@ -38,6 +38,7 @@ export const PostController = {
     return res.json({ post, comments: postComments });
   },
 
+
   getAll: (req: Request, res: Response) => {
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 5;
@@ -59,6 +60,7 @@ export const PostController = {
         hasMore: endIndex < posts.length
       }
     });
+
   },
 
   likePost: (req: Request, res: Response) => {

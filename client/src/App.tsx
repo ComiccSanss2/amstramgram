@@ -21,7 +21,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Feed />} />
         <Route path="/create" element={<CreatePost />} />
         <Route path="/post/:id" element={<PostDetail />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/:id" element={<ProfilePage />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
