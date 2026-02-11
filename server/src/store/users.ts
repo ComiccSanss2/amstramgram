@@ -47,3 +47,34 @@ export function findByEmail(email: string): User | undefined {
 export function findById(id: string): User | undefined {
   return byId.get(id);
 }
+
+export function searchByPseudo(query: string): Omit<User, "mdp">[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  const list = Array.from(byId.values());
+  return list
+    .filter((u) => u.pseudo.toLowerCase().includes(q))
+    .map(({ mdp: _, ...pub }) => pub);
+}
+
+export function updateUser(
+  id: string,
+  updates: { email?: string; mdp?: string; pseudo?: string; bPrivate?: boolean }
+): User | undefined {
+  const user = byId.get(id);
+  if (!user) return undefined;
+
+  if (updates.email !== undefined) {
+    const existing = findByEmail(updates.email);
+    if (existing && existing.id !== id) return undefined;
+    byEmail.delete(user.email.toLowerCase());
+    user.email = updates.email;
+    byEmail.set(user.email.toLowerCase(), user);
+  }
+  if (updates.mdp !== undefined) user.mdp = updates.mdp;
+  if (updates.pseudo !== undefined) user.pseudo = updates.pseudo;
+  if (updates.bPrivate !== undefined) user.bPrivate = updates.bPrivate;
+
+  save();
+  return user;
+}

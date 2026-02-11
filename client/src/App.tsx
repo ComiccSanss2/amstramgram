@@ -5,7 +5,8 @@ import AuthPage from "./pages/AuthPage";
 import { CreatePost } from "./pages/CreatePost";
 import { PostDetail } from "./pages/PostDetail";
 import { Feed } from "./pages/Feed";
-import ProfilePage from "./pages/ProfilePage"; 
+import ProfilePage from "./pages/ProfilePage";
+import SearchPage from "./pages/SearchPage";
 
 import "./App.css";
 
@@ -19,6 +20,7 @@ const AppRoutes = () => {
     <Routes>
       <Route element={<AppLayout />}>
         <Route path="/" element={<Feed />} />
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/create" element={<CreatePost />} />
         <Route path="/post/:id" element={<PostDetail />} />
         <Route path="/profile/:id" element={<ProfilePage />} />

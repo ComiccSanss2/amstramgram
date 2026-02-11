@@ -9,12 +9,13 @@ import "./ProfilePage.css"
 
 
 export default function ProfilePage() {
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
   const { id } = useParams();
   const [profile, setProfile] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [editModalOpen, setEditModalOpen] = useState(false);
 
   const profileId = id ?? user?.id ?? "";
 
@@ -74,6 +75,9 @@ export default function ProfilePage() {
   const isPrivate = profile.bPrivate
   const canSeePosts = isMyProfile || !isPrivate || isFollower;
 
+  const handleOpenEdit = () => setEditModalOpen(true);
+  const handleCloseEdit = () => setEditModalOpen(false);
+
   return (
     <div className="profile-container">
       <section className="profileHeader">
@@ -90,7 +94,7 @@ export default function ProfilePage() {
 
               <div className="profileActions">
                 {isMyProfile ? (
-                  <button className="btn secondary">Edit</button>
+                  <button className="btn secondary" onClick={handleOpenEdit}>Edit</button>
                 ) : (
                   <>
                     <button className="btn primary">Follow</button>
@@ -145,6 +149,155 @@ export default function ProfilePage() {
         ))
       )}
       </section>
+
+      {editModalOpen && profile && (
+        <EditProfileModal
+          profile={profile}
+          onClose={handleCloseEdit}
+          onSuccess={async (updated) => {
+            setProfile(updated);
+            await refreshUser();
+            handleCloseEdit();
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+function EditProfileModal({
+  profile,
+  onClose,
+  onSuccess,
+}: {
+  profile: User;
+  onClose: () => void;
+  onSuccess: (updated: User) => void | Promise<void>;
+}) {
+  const [email, setEmail] = useState(profile.email);
+  const [pseudo, setPseudo] = useState(profile.pseudo);
+  const [bPrivate, setBPrivate] = useState(profile.bPrivate);
+  const [mdp, setMdp] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    setEmail(profile.email);
+    setPseudo(profile.pseudo);
+    setBPrivate(profile.bPrivate);
+    setMdp("");
+  }, [profile]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setSubmitting(true);
+    try {
+      const data: { email?: string; pseudo?: string; bPrivate?: boolean; mdp?: string } = {
+        email: email.trim(),
+        pseudo: pseudo.trim(),
+        bPrivate,
+      };
+      if (mdp.trim()) data.mdp = mdp.trim();
+      const updated = await ProfilService.update(data);
+      await onSuccess(updated);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Erreur");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "rgba(0,0,0,0.5)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 1000,
+      }}
+      onClick={onClose}
+    >
+      <div
+        className="card"
+        style={{ width: "90%", maxWidth: "400px", padding: "20px" }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h3 style={{ margin: "0 0 15px 0" }}>Modifier le profil</h3>
+        <form onSubmit={handleSubmit}>
+          {error && <p style={{ color: "red", margin: "0 0 10px 0", fontSize: "0.9em" }}>{error}</p>}
+          <input
+            type="text"
+            placeholder="Pseudo"
+            value={pseudo}
+            onChange={(e) => setPseudo(e.target.value)}
+            required
+            className="auth-input"
+            style={{
+              width: "100%",
+              padding: "12px",
+              border: "1px solid #ddd",
+              borderRadius: "8px",
+              marginBottom: "10px",
+              boxSizing: "border-box",
+            }}
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="auth-input"
+            style={{
+              width: "100%",
+              padding: "12px",
+              border: "1px solid #ddd",
+              borderRadius: "8px",
+              marginBottom: "10px",
+              boxSizing: "border-box",
+            }}
+          />
+          <input
+            type="password"
+            placeholder="Nouveau mot de passe (optionnel)"
+            value={mdp}
+            onChange={(e) => setMdp(e.target.value)}
+            className="auth-input"
+            style={{
+              width: "100%",
+              padding: "12px",
+              border: "1px solid #ddd",
+              borderRadius: "8px",
+              marginBottom: "10px",
+              boxSizing: "border-box",
+            }}
+          />
+          <label
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              marginBottom: "15px",
+              cursor: "pointer",
+            }}
+          >
+            <input type="checkbox" checked={bPrivate} onChange={(e) => setBPrivate(e.target.checked)} />
+            Compte privé
+          </label>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <button type="button" onClick={onClose} className="btn-submit" style={{ flex: 1, background: "#8e8e8e" }}>
+              Annuler
+            </button>
+            <button type="submit" className="btn-submit" style={{ flex: 1 }} disabled={submitting || !pseudo.trim() || !email.trim()}>
+              {submitting ? "Enregistrement..." : "Enregistrer"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

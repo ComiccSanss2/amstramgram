@@ -4,8 +4,8 @@ import { PostController } from '../controllers/PostController.js';
 const router: Router = Router();
 
 router.post('/', PostController.create);
-router.get('/:id', PostController.getOne);
 router.get('/', PostController.getAll);
+router.get('/:id', PostController.getOne);
 router.post('/like/:id', PostController.likePost);
 router.post('/unlike/:id', PostController.unlikePost);
 router.delete('/:id', PostController.delete);

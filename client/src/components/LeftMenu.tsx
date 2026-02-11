@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Home, Plus, User, LogOut } from "lucide-react";
+import { Home, Plus, User, Search, LogOut } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 
 export function LeftMenu() {
@@ -11,6 +11,9 @@ export function LeftMenu() {
       <div className="app-header-center">
         <Link to="/" className="app-menu-link" title="Feed">
           <Home size={24} />
+        </Link>
+        <Link to="/search" className="app-menu-link" title="Rechercher">
+          <Search size={24} />
         </Link>
         <Link to="/create" className="app-menu-link" title="Créer un post">
           <Plus size={24} />

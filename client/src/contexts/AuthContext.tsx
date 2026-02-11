@@ -11,6 +11,7 @@ type Auth = {
   register: (email: string, mdp: string, pseudo: string, bPrivate?: boolean) => Promise<void>;
   logout: () => void;
   clearError: () => void;
+  refreshUser: () => Promise<void>;
 };
 
 const AuthContext = createContext<Auth | null>(null);
@@ -54,8 +55,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem(TOKEN_KEY);
   };
 
+  const refreshUser = () => AuthService.me().then(setUser);
+
   return (
-    <AuthContext.Provider value={{ user, error, login, register, logout, clearError: () => setError(null) }}>
+    <AuthContext.Provider value={{ user, error, login, register, logout, clearError: () => setError(null), refreshUser }}>
       {children}
     </AuthContext.Provider>
   );
