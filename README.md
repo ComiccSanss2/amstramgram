@@ -53,13 +53,18 @@ const API = "http://adresseIP:3000";
 Une fois que ça a été fait,
 **Lancez :**
 ```bash
-coté client: npm run dev -- --host
-coté server: npm run dev
+côté client: npm run dev -- --host
+côté server: npm run dev
 ```
 
 **Coté users qui vont se connecter :**
 Taper l'ip donné par le host dans le navigateur et have fun !
 
+##Pour lancer les test unitaires 
+**Lancez :**
+```bash
+côté server: npm run test
+```
 
 
 
