@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import "./AuthPage.css";
 
 export default function AuthPage() {
+  const navigate = useNavigate();
   const { login, register, error, clearError } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
@@ -19,6 +21,7 @@ export default function AuthPage() {
       } else {
         await register(email, mdp, pseudo, bPrivate);
       }
+      navigate("/", { replace: true });
     } catch {
       // error is set in context
     }
