@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { PostService } from '../services/post.services'; 
 import type { Post, Comment } from '../types/index';
-import { HeartIcon, MessageCircleIcon } from 'lucide-react';
+import { HeartIcon, MessageCircleIcon, Trash2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 export const PostDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [data, setData] = useState<{ post: Post; comments: Comment[] } | null>(null);
   const [commentModal, setCommentModal] = useState(false);
@@ -73,7 +74,28 @@ export const PostDetail = () => {
     }
   };
 
+  const handleDeletePost = async () => {
+    if (!id) return;
+    try {
+      await PostService.delete(id);
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDeleteComment = async (commentId: string) => {
+    try {
+      await PostService.deleteComment(commentId);
+      setData((prev) => prev ? { ...prev, comments: prev.comments.filter((c) => c.id !== commentId) } : null);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   if (!data) return <p>Chargement...</p>;
+
+  const isMine = data.post.id_user === user?.id;
 
   return (
     <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
@@ -138,6 +160,11 @@ export const PostDetail = () => {
           <MessageCircleIcon size={18} />
           Commenter
         </button>
+        {isMine && (
+          <button onClick={handleDeletePost} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8e8e8e' }} title="Supprimer le post">
+            <Trash2 size={18} />
+          </button>
+        )}
       </div>
 
       {/* Liste des commentaires */}
@@ -146,7 +173,9 @@ export const PostDetail = () => {
         {data.comments.length === 0 ? (
           <p style={{ color: '#8e8e8e', margin: 0 }}>Aucun commentaire.</p>
         ) : (
-          data.comments.map((comment) => (
+          data.comments.map((comment) => {
+            const isMyComment = comment.id_user === user?.id;
+            return (
             <div key={comment.id} style={{ padding: '12px 0', borderBottom: '1px solid #efefef' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '10px' }}>
                 <div>
@@ -154,19 +183,27 @@ export const PostDetail = () => {
                   <p style={{ margin: '6px 0 0 0', fontSize: '0.95em' }}>{comment.content}</p>
                   <small style={{ color: '#8e8e8e' }}>{new Date(comment.date_creation).toLocaleDateString()}</small>
                 </div>
-                <button onClick={() => handleLikeComment(comment.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', flexShrink: 0 }}>
-                  <HeartIcon 
-                    fill={comment.liked_by?.includes(user?.id || '') ? 'red' : 'none'} 
-                    stroke={comment.liked_by?.includes(user?.id || '') ? 'red' : 'black'}
-                    size={18} 
-                  />
-                </button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <button onClick={() => handleLikeComment(comment.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', flexShrink: 0 }}>
+                    <HeartIcon 
+                      fill={comment.liked_by?.includes(user?.id || '') ? 'red' : 'none'} 
+                      stroke={comment.liked_by?.includes(user?.id || '') ? 'red' : 'black'}
+                      size={18} 
+                    />
+                  </button>
+                  {isMyComment && (
+                    <button onClick={() => handleDeleteComment(comment.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8e8e8e' }} title="Supprimer le commentaire">
+                      <Trash2 size={16} />
+                    </button>
+                  )}
+                </div>
               </div>
               <div style={{ fontSize: '0.85em', color: '#8e8e8e', marginTop: '4px' }}>
                 {comment.liked_by?.length || 0} J'aime
               </div>
             </div>
-          ))
+            );
+          })
         )}
       </div>
 

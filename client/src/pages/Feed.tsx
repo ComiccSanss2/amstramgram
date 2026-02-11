@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PostService } from '../services/post.services';
 import type { Post } from '../types/index';
-import { HeartIcon, MessageCircleIcon } from 'lucide-react';
+import { HeartIcon, MessageCircleIcon, Trash2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 export const Feed = () => {
@@ -84,6 +84,15 @@ export const Feed = () => {
     return post.liked_by?.length || 0;
   };
 
+  const handleDelete = async (postId: string) => {
+    try {
+      await PostService.delete(postId);
+      setPosts((prev) => prev.filter((p) => p.id !== postId));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const openCommentModal = (postId: string) => {
     setCommentModal({ open: true, postId });
     setCommentText("");
@@ -125,8 +134,9 @@ export const Feed = () => {
           Aucun post. Soyez le premier !
         </div>
       ) : (
-        posts.map((post) => (
-
+        posts.map((post) => {
+          const isMine = post.id_user === user?.id;
+          return (
           <div key={post.id} className="card" style={{ padding: 0, overflow: 'hidden' }}>
             {/* Header */}
             <div style={{ padding: '10px 15px', fontWeight: 'bold', borderBottom: '1px solid #efefef', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -145,6 +155,11 @@ export const Feed = () => {
                 <button onClick={() => openCommentModal(post.id)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
                   <MessageCircleIcon stroke="black" size={20} />
                 </button>
+                {isMine && (
+                  <button onClick={() => handleDelete(post.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8e8e8e' }} title="Supprimer">
+                    <Trash2 size={20} />
+                  </button>
+                )}
               </div>
             </div>
 
@@ -169,7 +184,8 @@ export const Feed = () => {
               </div>
             </div>
           </div>
-        ))
+          );
+        })
       )}
 
       {/* Bouton Charger Plus */}

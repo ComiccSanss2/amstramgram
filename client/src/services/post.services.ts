@@ -42,4 +42,9 @@ export const PostService = {
 
   unlikeComment: (commentId: string, id_user: string) =>
     api.post<{ comment: Comment }>(`${POSTS}/comment/unlike/${commentId}`, { id_user }),
+
+  delete: (id: string) => 
+    api.del<void>(`${POSTS}/${id}`),
+  deleteComment: (commentId: string) => 
+    api.del<void>(`${POSTS}/comment/${commentId}`),
 };
