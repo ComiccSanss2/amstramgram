@@ -57,6 +57,22 @@ export const PostDetail = () => {
     }
   };
 
+  const handleLikePost = async () => {
+    if (!user || !id) return;
+    const isLiked = data?.post.liked_by?.includes(user.id);
+    try {
+      if (isLiked) {
+        const response = await PostService.unlikePost(id, user.id);
+        setData(prev => prev ? { ...prev, post: response.post } : null);
+      } else {
+        const response = await PostService.likePost(id, user.id);
+        setData(prev => prev ? { ...prev, post: response.post } : null);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   if (!data) return <p>Chargement...</p>;
 
   return (
@@ -69,10 +85,22 @@ export const PostDetail = () => {
       </div>
 
       <div className="card">
-        {/* En-tête avec le pseudo */}
-        <h2 style={{ fontSize: '1.2rem', margin: '0 0 15px 0' }}>
-          @{data.post.pseudo || "Anonyme"}
-        </h2>
+        {/* Header */}
+        <div style={{ padding: '10px 15px', fontWeight: 'bold', borderBottom: '1px solid #efefef', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                @{data.post.pseudo}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <button onClick={() => handleLikePost()} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <p style={{ margin: 0, padding: 0, fontSize: '1em', color: '#8e8e8e' }}>{data.post.liked_by?.length || 0}</p>
+                  <HeartIcon 
+                    fill={data.post.liked_by?.includes(user?.id || '') ? 'red' : 'none'} 
+                    stroke={data.post.liked_by?.includes(user?.id || '') ? 'red' : 'black'}
+                    size={20} 
+                  />
+                </button>
+              </div>
+            </div>
 
         {/* --- IMAGE --- */}
         {data.post.image && (
@@ -94,10 +122,12 @@ export const PostDetail = () => {
         </p>
 
         <hr style={{ margin: '20px 0', border: '0', borderTop: '1px solid #eee' }} />
-        
-        <small style={{ color: '#888' }}>
-          Publié le {new Date(data.post.date_creation).toLocaleDateString()} • {data.post.liked_by?.length || 0} J'aime
-        </small>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+          <small style={{ color: '#888' }}>
+            Publié le {new Date(data.post.date_creation).toLocaleDateString()}
+          </small>
+        </div>
       </div>
 
       <div style={{ marginTop: '20px', display: 'flex', gap: '10px', alignItems: 'center' }}>
