@@ -1,0 +1,96 @@
+.profileHeader {
+  background: white;
+  border-radius: 18px 18px 0 0;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.profileCover {
+  height: 170px;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa, #fb7185);
+}
+
+.profileHeaderContent {
+  display: flex;
+  gap: 18px;
+  padding: 0 20px 20px;
+  margin-top: -55px;
+}
+
+.profileAvatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.338);
+  border: 4px solid rgba(255, 255, 255, 0.142);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.profileAvatar span {
+  width: 90px;
+  height: 90px;
+  border-radius: 22px;
+  background: #111827;
+  color: white;
+  display: grid;
+  place-items: center;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.profileInfos {
+  flex: 1;
+  padding-top: 60px;
+}
+
+.profileTopRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.profileTopRow h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.profileActions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+}
+
+.btn.primary {
+  background: #0095f6;
+  color: white;
+}
+
+.btn.secondary {
+  background: rgba(17,24,39,0.06);
+  color: #111827;
+}
+
+.profileStats {
+  margin-top: 12px;
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: rgba(17,24,39,0.75);
+}
+
+.profileStats b {
+  color: #111827;
+}

@@ -5,6 +5,7 @@ import type { User } from "../types";
 import { Link, useParams } from 'react-router-dom';
 import type { Post } from '../types/index';
 import { PostService } from '../services/post.services.js';
+import "./ProfilePage.css"
 
 
 export default function ProfilePage() {
@@ -75,41 +76,51 @@ export default function ProfilePage() {
 
   return (
     <div className="profile-container">
-      <section className="profile-info">
-        <h2>{profile.pseudo}</h2>
+      <section className="profileHeader">
+        <div className="profileCover"></div>
 
-        {isMyProfile && <p>{profile.email}</p>}
+        <div className="profileHeaderContent">
+          <div className="profileAvatar">
+            <span>{profile.pseudo?.[0]?.toUpperCase()}</span>
+          </div>
 
-        <div className="stats">
-          <span>{profile.followers.length} abonnés</span>
-          <span> · </span>
-          <span>{profile.following.length} abonnements</span>
+          <div className="profileInfos">
+            <div className="profileTopRow">
+              <h2>{profile.pseudo}</h2>
+
+              <div className="profileActions">
+                {isMyProfile ? (
+                  <button className="btn secondary">Edit</button>
+                ) : (
+                  <>
+                    <button className="btn primary">Follow</button>
+                    <button className="btn secondary">Message</button>
+                  </>
+                )}
+              </div>
+            </div>
+
+            <div className="profileStats">
+              <p><b>{posts.length}</b> Posts</p>
+              <p><b>{profile.followers.length}</b> Followers</p>
+              <p><b>{profile.following.length}</b> Following</p>
+            </div>
+          </div>
         </div>
-
-        {!isMyProfile && (
-          <p style={{ marginTop: 8, color: "#666" }}>
-            {isPrivate ? "Compte privé" : "Compte public"}
-          </p>
-        )}
       </section>
-
-      <hr />
       
       <section className="profile-posts">
         <h3>{isMyProfile ? "Mes posts" : "Posts"}</h3>
 
         {!canSeePosts ? (
-          <div className="card">
+          <span>
             Ce compte est privé. Abonne-toi pour voir ses posts.
-          </div>
+          </span>
         ) : posts.length === 0 ? (
         <div className="card">Pas encore de posts.</div>
       ) : (
         posts.map((post) => (
           <div key={post.id} className="card" style={{ padding: 0, overflow: 'hidden' }}>
-            {/* Header */}
-            <Link to={`/profile/${post.id_user}`} style={{ padding: '10px 15px', fontWeight: 'bold', borderBottom: '1px solid #efefef' }}>@{post.pseudo} </Link>
-
             {/* Image */}
             {post.image && (
               <img 
@@ -123,7 +134,7 @@ export default function ProfilePage() {
             <div style={{ padding: '15px' }}>
               <p style={{ whiteSpace: 'pre-wrap', margin: '0 0 10px 0' }}>{post.content}</p>
               
-              <div style={{ fontSize: '0.85em', color: '#8e8e8e', display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+              <div style={{ fontSize: '0.85em', color: '#8e8e8e', display: 'flex', justifyContent: 'space-between', padding: '10px 10px', borderTop: '1px solid #efefef' }}>
                 <span>{new Date(post.date_creation).toLocaleDateString()}</span>
                 <Link to={`/post/${post.id}`} style={{ color: '#0095f6', textDecoration: 'none', fontWeight: 'bold' }}>
                   Voir détails &rarr;
