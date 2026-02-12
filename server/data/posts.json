@@ -1,10 +1,13 @@
 [
-  {"id":"1770817836594","id_user":"3d322a87-ae94-41e0-895c-ad74da09ddf1","pseudo":"azerty","liked_by":["c9b99d4e-43a8-4ea0-91d7-66459249e7da"],"content":"ilvbieqlvbelbt","image":"","date_creation":"2026-02-11T13:50:36.594Z"},
-  {"id":"1770817836595","id_user":"c9b99d4e-43a8-4ea0-91d7-66459249e7da","pseudo":"qsdfgh","liked_by":["3d322a87-ae94-41e0-895c-ad74da09ddf1","f8ba75b7-e763-4eb0-89de-b5d9d9ca006e"],"content":"Mon premier post avec une belle photo ! 🌅","image":"https://picsum.photos/seed/post1/600/400","date_creation":"2026-02-11T14:20:00.000Z"},
-  {"id":"1770817836596","id_user":"f8ba75b7-e763-4eb0-89de-b5d9d9ca006e","pseudo":"lucas2","liked_by":["c9b99d4e-43a8-4ea0-91d7-66459249e7da"],"content":"","image":"https://picsum.photos/seed/post2/600/400","date_creation":"2026-02-11T15:00:00.000Z"},
-  {"id":"1770817836597","id_user":"a1b2c3d4-e5f6-7890-abcd-ef1234567890","pseudo":"marie","liked_by":[],"content":"Petit déj au soleil ☀️ La vie est belle !","image":"https://picsum.photos/seed/post3/600/400","date_creation":"2026-02-11T16:30:00.000Z"},
-  {"id":"1770817836598","id_user":"b2c3d4e5-f6a7-8901-bcde-f12345678901","pseudo":"thomas","liked_by":["f8ba75b7-e763-4eb0-89de-b5d9d9ca006e"],"content":"Week-end à la montagne, les paysages sont incroyables !","image":"https://picsum.photos/seed/post4/600/400","date_creation":"2026-02-11T17:45:00.000Z"},
-  {"id":"1770817836599","id_user":"c9b99d4e-43a8-4ea0-91d7-66459249e7da","pseudo":"qsdfgh","liked_by":[],"content":"Juste un thought du jour : code is poetry 💻","image":"","date_creation":"2026-02-11T18:00:00.000Z"},
-  {"id":"1770817836600","id_user":"3d322a87-ae94-41e0-895c-ad74da09ddf1","pseudo":"azerty","liked_by":["a1b2c3d4-e5f6-7890-abcd-ef1234567890"],"content":"Vue depuis ma fenêtre ce matin","image":"https://picsum.photos/seed/post5/600/400","date_creation":"2026-02-11T19:15:00.000Z"},
-  {"id":"1770817836601","id_user":"a1b2c3d4-e5f6-7890-abcd-ef1234567890","pseudo":"marie","liked_by":["c9b99d4e-43a8-4ea0-91d7-66459249e7da"],"content":"Café et bon livre 📚","image":"","date_creation":"2026-02-11T20:00:00.000Z"}
+  {
+    "id": "1770817836594",
+    "id_user": "3d322a87-ae94-41e0-895c-ad74da09ddf1",
+    "pseudo": "azerty",
+    "liked_by": [
+      "c9b99d4e-43a8-4ea0-91d7-66459249e7da"
+    ],
+    "content": "ilvbieqlvbelbt",
+    "image": "",
+    "date_creation": "2026-02-11T13:50:36.594Z"
+  }
 ]

@@ -1,7 +1,39 @@
 [
-  {"id":"3d322a87-ae94-41e0-895c-ad74da09ddf1","email":"azerty@gmail.com","mdp":"azerty","pseudo":"azerty","bPrivate":true,"followers":["c9b99d4e-43a8-4ea0-91d7-66459249e7da"],"following":["c9b99d4e-43a8-4ea0-91d7-66459249e7da"],"bAdmin":false},
-  {"id":"c9b99d4e-43a8-4ea0-91d7-66459249e7da","email":"qsdfgh@gmail.com","mdp":"qsdfgh","pseudo":"qsdfgh","bPrivate":false,"followers":["3d322a87-ae94-41e0-895c-ad74da09ddf1","f8ba75b7-e763-4eb0-89de-b5d9d9ca006e"],"following":["3d322a87-ae94-41e0-895c-ad74da09ddf1"],"bAdmin":false},
-  {"id":"f8ba75b7-e763-4eb0-89de-b5d9d9ca006e","email":"lucas@test.com","mdp":"azerty123","pseudo":"lucas2","bPrivate":false,"followers":[],"following":["c9b99d4e-43a8-4ea0-91d7-66459249e7da"],"bAdmin":false},
-  {"id":"a1b2c3d4-e5f6-7890-abcd-ef1234567890","email":"marie@test.fr","mdp":"marie123","pseudo":"marie","bPrivate":false,"followers":["c9b99d4e-43a8-4ea0-91d7-66459249e7da"],"following":["c9b99d4e-43a8-4ea0-91d7-66459249e7da"],"bAdmin":false},
-  {"id":"b2c3d4e5-f6a7-8901-bcde-f12345678901","email":"thomas@test.fr","mdp":"thomas123","pseudo":"thomas","bPrivate":false,"followers":[],"following":["f8ba75b7-e763-4eb0-89de-b5d9d9ca006e"],"bAdmin":false}
+  {
+    "id": "3d322a87-ae94-41e0-895c-ad74da09ddf1",
+    "email": "azerty@gmail.com",
+    "mdp": "azerty",
+    "pseudo": "azerty",
+    "bPrivate": true,
+    "followers": [],
+    "following": [],
+    "bAdmin": false
+  },
+  {
+<<<<<<< HEAD
+    "id": "01c376d2-802f-45a5-9e08-a4366528a4ef",
+    "email": "a@a.com",
+    "mdp": "a",
+    "pseudo": "abonnetwa",
+    "bPrivate": true,
+    "followers": [],
+    "following": [],
+    "bAdmin": false
+  },
+  {
+    "id": "bc7c1715-b4de-41dc-aba3-4e9db6c719c0",
+    "email": "b@b.com",
+    "mdp": "b",
+    "pseudo": "desabone twa",
+=======
+    "id": "c9b99d4e-43a8-4ea0-91d7-66459249e7da",
+    "email": "qsdfgh@gmail.com",
+    "mdp": "qsdfgh",
+    "pseudo": "qsdfgh",
+>>>>>>> main
+    "bPrivate": false,
+    "followers": [],
+    "following": [],
+    "bAdmin": false
+  }
 ]
