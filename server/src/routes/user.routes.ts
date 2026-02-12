@@ -3,7 +3,6 @@ import { Router } from "express";
 import type { UpdateUserDto } from "../dtos/index.js";
 import { findById, updateUser, followUser, unfollowUser } from "../store/users.js";
 import { searchUsers } from "../controllers/userController.js";
-import { error } from "node:console";
 
 const router: Router = Router();
 
