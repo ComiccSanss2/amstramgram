@@ -1,13 +1,92 @@
 [
   {
-    "id": "1770817836594",
-    "id_user": "3d322a87-ae94-41e0-895c-ad74da09ddf1",
-    "pseudo": "azerty",
-    "liked_by": [
-      "c9b99d4e-43a8-4ea0-91d7-66459249e7da"
-    ],
-    "content": "ilvbieqlvbelbt",
+    "id": "1707700000000",
+    "id_user": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "pseudo": "Alice",
+    "liked_by": ["b2c3d4e5-f6a7-8901-bcde-f12345678901", "c3d4e5f6-a7b8-9012-cdef-123456789012"],
+    "content": "Premier jour sur Amstramgram ! Trop contente d'être ici 🎉",
     "image": "",
-    "date_creation": "2026-02-11T13:50:36.594Z"
+    "date_creation": "2025-02-12T09:00:00.000Z"
+  },
+  {
+    "id": "1707700100000",
+    "id_user": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+    "pseudo": "Bob",
+    "liked_by": ["a1b2c3d4-e5f6-7890-abcd-ef1234567890"],
+    "content": "Magnifique coucher de soleil ce soir 🌅",
+    "image": "https://picsum.photos/seed/sunset/800/600",
+    "date_creation": "2025-02-13T18:30:00.000Z"
+  },
+  {
+    "id": "1707700200000",
+    "id_user": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+    "pseudo": "Charlie",
+    "liked_by": ["a1b2c3d4-e5f6-7890-abcd-ef1234567890", "b2c3d4e5-f6a7-8901-bcde-f12345678901", "e5f6a7b8-c9d0-1234-efab-345678901234"],
+    "content": "Qui veut venir coder ce weekend ? On fait un hackathon ! 💻",
+    "image": "",
+    "date_creation": "2025-02-14T10:15:00.000Z"
+  },
+  {
+    "id": "1707700300000",
+    "id_user": "d4e5f6a7-b8c9-0123-defa-234567890123",
+    "pseudo": "Diana",
+    "liked_by": ["c3d4e5f6-a7b8-9012-cdef-123456789012"],
+    "content": "Nouveau projet en cours... Stay tuned! 🔥",
+    "image": "",
+    "date_creation": "2025-02-15T14:00:00.000Z"
+  },
+  {
+    "id": "1707700400000",
+    "id_user": "e5f6a7b8-c9d0-1234-efab-345678901234",
+    "pseudo": "Emma",
+    "liked_by": ["f6a7b8c9-d0e1-2345-fabc-456789012345", "d4e5f6a7-b8c9-0123-defa-234567890123"],
+    "content": "Mon chat a encore volé ma chaise de bureau 😂",
+    "image": "https://picsum.photos/seed/cat/800/600",
+    "date_creation": "2025-02-16T08:45:00.000Z"
+  },
+  {
+    "id": "1707700500000",
+    "id_user": "f6a7b8c9-d0e1-2345-fabc-456789012345",
+    "pseudo": "Frank",
+    "liked_by": ["e5f6a7b8-c9d0-1234-efab-345678901234", "a1b2c3d4-e5f6-7890-abcd-ef1234567890"],
+    "content": "Recette du jour : risotto aux champignons 🍄",
+    "image": "https://picsum.photos/seed/food/800/600",
+    "date_creation": "2025-02-17T12:30:00.000Z"
+  },
+  {
+    "id": "1707700600000",
+    "id_user": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "pseudo": "Alice",
+    "liked_by": ["b2c3d4e5-f6a7-8901-bcde-f12345678901", "d4e5f6a7-b8c9-0123-defa-234567890123", "f6a7b8c9-d0e1-2345-fabc-456789012345"],
+    "content": "J'ai enfin fini mon portfolio ! Venez voir 🚀",
+    "image": "https://picsum.photos/seed/portfolio/800/600",
+    "date_creation": "2025-02-18T16:00:00.000Z"
+  },
+  {
+    "id": "1707700700000",
+    "id_user": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+    "pseudo": "Bob",
+    "liked_by": [],
+    "content": "Quelqu'un a des recommandations de livres sur TypeScript ?",
+    "image": "",
+    "date_creation": "2025-02-19T09:20:00.000Z"
+  },
+  {
+    "id": "1707700800000",
+    "id_user": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+    "pseudo": "Charlie",
+    "liked_by": ["a1b2c3d4-e5f6-7890-abcd-ef1234567890", "e5f6a7b8-c9d0-1234-efab-345678901234"],
+    "content": "Le hackathon était incroyable ! On a fini 2ème 🏆",
+    "image": "",
+    "date_creation": "2025-02-20T20:00:00.000Z"
+  },
+  {
+    "id": "1707700900000",
+    "id_user": "e5f6a7b8-c9d0-1234-efab-345678901234",
+    "pseudo": "Emma",
+    "liked_by": ["a1b2c3d4-e5f6-7890-abcd-ef1234567890", "b2c3d4e5-f6a7-8901-bcde-f12345678901", "c3d4e5f6-a7b8-9012-cdef-123456789012", "f6a7b8c9-d0e1-2345-fabc-456789012345"],
+    "content": "Balade en montagne aujourd'hui. La nature c'est la vie 🏔️",
+    "image": "https://picsum.photos/seed/mountain/800/600",
+    "date_creation": "2025-02-21T11:00:00.000Z"
   }
 ]

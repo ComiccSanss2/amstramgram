@@ -1,36 +1,105 @@
 [
   {
-    "id": "3d322a87-ae94-41e0-895c-ad74da09ddf1",
-    "email": "azerty@gmail.com",
-    "mdp": "azerty",
-    "pseudo": "azerty",
-    "bPrivate": true,
-    "followers": [],
-    "following": [],
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "email": "alice@gmail.com",
+    "mdp": "alice123",
+    "pseudo": "Alice",
+    "bPrivate": false,
+    "followers": [
+      "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "c3d4e5f6-a7b8-9012-cdef-123456789012"
+    ],
+    "following": [
+      "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "d4e5f6a7-b8c9-0123-defa-234567890123"
+    ],
+    "bAdmin": true
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+    "email": "bob@gmail.com",
+    "mdp": "bob123",
+    "pseudo": "Bob",
+    "bPrivate": false,
+    "followers": [
+      "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "c3d4e5f6-a7b8-9012-cdef-123456789012",
+      "e5f6a7b8-c9d0-1234-efab-345678901234"
+    ],
+    "following": [
+      "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "c3d4e5f6-a7b8-9012-cdef-123456789012"
+    ],
     "bAdmin": false
   },
   {
-<<<<<<< HEAD
-    "id": "01c376d2-802f-45a5-9e08-a4366528a4ef",
-    "email": "a@a.com",
-    "mdp": "a",
-    "pseudo": "abonnetwa",
-    "bPrivate": true,
-    "followers": [],
-    "following": [],
+    "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+    "email": "charlie@gmail.com",
+    "mdp": "charlie123",
+    "pseudo": "Charlie",
+    "bPrivate": false,
+    "followers": [
+      "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "d4e5f6a7-b8c9-0123-defa-234567890123"
+    ],
+    "following": [
+      "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "f6a7b8c9-d0e1-2345-fabc-456789012345"
+    ],
     "bAdmin": false
   },
   {
-    "id": "bc7c1715-b4de-41dc-aba3-4e9db6c719c0",
-    "email": "b@b.com",
-    "mdp": "b",
-    "pseudo": "desabone twa",
-=======
-    "id": "c9b99d4e-43a8-4ea0-91d7-66459249e7da",
-    "email": "qsdfgh@gmail.com",
-    "mdp": "qsdfgh",
-    "pseudo": "qsdfgh",
->>>>>>> main
+    "id": "d4e5f6a7-b8c9-0123-defa-234567890123",
+    "email": "diana@gmail.com",
+    "mdp": "diana123",
+    "pseudo": "Diana",
+    "bPrivate": true,
+    "followers": [
+      "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+    ],
+    "following": [
+      "c3d4e5f6-a7b8-9012-cdef-123456789012",
+      "e5f6a7b8-c9d0-1234-efab-345678901234"
+    ],
+    "bAdmin": false
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-efab-345678901234",
+    "email": "emma@gmail.com",
+    "mdp": "emma123",
+    "pseudo": "Emma",
+    "bPrivate": false,
+    "followers": [
+      "d4e5f6a7-b8c9-0123-defa-234567890123",
+      "f6a7b8c9-d0e1-2345-fabc-456789012345"
+    ],
+    "following": [
+      "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "f6a7b8c9-d0e1-2345-fabc-456789012345"
+    ],
+    "bAdmin": false
+  },
+  {
+    "id": "f6a7b8c9-d0e1-2345-fabc-456789012345",
+    "email": "frank@gmail.com",
+    "mdp": "frank123",
+    "pseudo": "Frank",
+    "bPrivate": false,
+    "followers": [
+      "c3d4e5f6-a7b8-9012-cdef-123456789012",
+      "e5f6a7b8-c9d0-1234-efab-345678901234"
+    ],
+    "following": [
+      "e5f6a7b8-c9d0-1234-efab-345678901234"
+    ],
+    "bAdmin": false
+  },
+  {
+    "id": "6b48ee40-b956-4e15-b019-c4d972090c44",
+    "email": "emma@gmail.com",
+    "mdp": "emma123",
+    "pseudo": "emma",
     "bPrivate": false,
     "followers": [],
     "following": [],
