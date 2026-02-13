@@ -76,6 +76,7 @@ export const PostDetail = () => {
 
   const handleDeletePost = async () => {
     if (!id) return;
+    if (!confirm("Supprimer ce post ?")) return;
     try {
       await PostService.delete(id);
       navigate("/");
@@ -85,6 +86,7 @@ export const PostDetail = () => {
   };
 
   const handleDeleteComment = async (commentId: string) => {
+    if (!confirm("Supprimer ce commentaire ?")) return;
     try {
       await PostService.deleteComment(commentId);
       setData((prev) => prev ? { ...prev, comments: prev.comments.filter((c) => c.id !== commentId) } : null);

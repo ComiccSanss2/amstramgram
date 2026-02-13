@@ -85,6 +85,7 @@ export const Feed = () => {
   };
 
   const handleDelete = async (postId: string) => {
+    if (!confirm("Supprimer ce post ?")) return;
     try {
       await PostService.delete(postId);
       setPosts((prev) => prev.filter((p) => p.id !== postId));
