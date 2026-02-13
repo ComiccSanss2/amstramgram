@@ -5,7 +5,7 @@ import type { User } from "../types";
 import { Link, useParams } from 'react-router-dom';
 import type { Post } from '../types/index';
 import { PostService } from '../services/post.services.js';
-import { LockKeyholeIcon, LockKeyholeOpenIcon, Trash2 } from 'lucide-react';
+import { LockKeyholeIcon, LockKeyholeOpenIcon} from 'lucide-react';
 import "./ProfilePage.css"
 
 
@@ -166,9 +166,6 @@ const hanleFollow = async () => {
             <div style={{ padding: '15px' }}>
               <div style={{ padding: '10px 15px', fontWeight: 'bold', borderBottom: '1px solid #efefef', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <p style={{ whiteSpace: 'pre-wrap', margin: '0 0 10px 0' }}>{post.content}</p>
-              <button onClick={() => handleDelete(post.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8e8e8e' }} title="Supprimer">
-                    <Trash2 size={20} />
-                  </button>
               </div>
               
               <div style={{ fontSize: '0.85em', color: '#8e8e8e', display: 'flex', justifyContent: 'space-between', padding: '10px 10px', borderTop: '1px solid #efefef' }}>
