@@ -5,7 +5,7 @@ import type { User } from "../types";
 import { Link, useParams } from 'react-router-dom';
 import type { Post } from '../types/index';
 import { PostService } from '../services/post.services.js';
-import { LockKeyholeIcon, LockKeyholeOpenIcon } from 'lucide-react';
+import { LockKeyholeIcon, LockKeyholeOpenIcon, Trash2 } from 'lucide-react';
 import "./ProfilePage.css"
 
 
@@ -82,6 +82,15 @@ const hanleFollow = async () => {
     console.error("Erreur follow/unfollow",e);
   }
 };
+  const handleDelete = async (postId: string) => {
+    if (!confirm("Supprimer ce post ?")) return;
+    try {
+      await PostService.delete(postId);
+      setPosts((prev) => prev.filter((p) => p.id !== postId));
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   if (!user) return <p> Veuillez vous connecter.</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
@@ -107,7 +116,7 @@ const hanleFollow = async () => {
 
           <div className="profileInfos">
             <div className="profileTopRow">
-              <h2>{profile.pseudo} {isPrivate ? <LockKeyholeIcon size={18}/> : <LockKeyholeOpenIcon size={18}/>}</h2>
+              <h2>{profile.pseudo} {isPrivate && !isFollower ? <LockKeyholeIcon size={18}/> : <LockKeyholeOpenIcon size={18}/>}</h2>
               <div className="profileActions">
                 {isMyProfile ? (
                   <button className="btn secondary" onClick={handleOpenEdit}>Edit</button>
@@ -155,7 +164,12 @@ const hanleFollow = async () => {
 
             {/* Contenu */}
             <div style={{ padding: '15px' }}>
+              <div style={{ padding: '10px 15px', fontWeight: 'bold', borderBottom: '1px solid #efefef', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <p style={{ whiteSpace: 'pre-wrap', margin: '0 0 10px 0' }}>{post.content}</p>
+              <button onClick={() => handleDelete(post.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8e8e8e' }} title="Supprimer">
+                    <Trash2 size={20} />
+                  </button>
+              </div>
               
               <div style={{ fontSize: '0.85em', color: '#8e8e8e', display: 'flex', justifyContent: 'space-between', padding: '10px 10px', borderTop: '1px solid #efefef' }}>
                 <span>{new Date(post.date_creation).toLocaleDateString()}</span>
