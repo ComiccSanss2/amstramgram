@@ -116,7 +116,7 @@ const hanleFollow = async () => {
 
           <div className="profileInfos">
             <div className="profileTopRow">
-              <h2>{profile.pseudo} {isPrivate && !isFollower ? <LockKeyholeIcon size={18}/> : <LockKeyholeOpenIcon size={18}/>}</h2>
+              <h2>{profile.pseudo} {isPrivate ? !isFollower ? <LockKeyholeIcon size={18}/> : <LockKeyholeOpenIcon size={18}/>: ""}</h2>
               <div className="profileActions">
                 {isMyProfile ? (
                   <button className="btn secondary" onClick={handleOpenEdit}>Edit</button>
