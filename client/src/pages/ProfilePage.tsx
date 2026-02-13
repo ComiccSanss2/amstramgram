@@ -114,7 +114,6 @@ const hanleFollow = async () => {
                 ) : (
                   <>
                     <button className={`btn ${isFollower ? 'secondary' : 'primary'}`} onClick={hanleFollow}>{isFollower ? "Unfollow" : "Follow"}</button>
-                    <button className="btn secondary">Message</button>
                   </>
                 )}
               </div>

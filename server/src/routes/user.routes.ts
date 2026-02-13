@@ -1,5 +1,6 @@
 import type { Request } from "express";
 import { Router } from "express";
+import bcrypt from "bcrypt";
 import type { UpdateUserDto } from "../dtos/index.js";
 import { findById, updateUser, followUser, unfollowUser } from "../store/users.js";
 import { searchUsers } from "../controllers/userController.js";
@@ -8,14 +9,14 @@ const router: Router = Router();
 
 router.get("/search", searchUsers);
 
-router.put("/me", (req, res) => {
+router.put("/me", async (req, res) => {
   const userId = (req as Request & { userId: string }).userId;
   const body = req.body as UpdateUserDto;
   const { email, mdp, pseudo, bPrivate } = body;
 
   const updates: { email?: string; mdp?: string; pseudo?: string; bPrivate?: boolean } = {};
   if (email !== undefined) updates.email = email;
-  if (mdp !== undefined) updates.mdp = mdp;
+  if (mdp !== undefined) updates.mdp = await bcrypt.hash(mdp, 10);
   if (pseudo !== undefined) updates.pseudo = pseudo;
   if (bPrivate !== undefined) updates.bPrivate = bPrivate;
 

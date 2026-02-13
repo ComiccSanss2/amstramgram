@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import request from "supertest";
+import bcrypt from "bcrypt";
 import app from "../app.js";
 
 vi.mock("../store/users.js", () => ({
@@ -24,7 +25,7 @@ describe("POST /auth/register", () => {
     vi.mocked(findByEmail).mockReturnValue({ id: "1", email: "a@a.com" } as any);
     const res = await request(app)
       .post("/auth/register")
-      .send({ email: "a@a.com", mdp: "x", pseudo: "p" });
+      .send({ email: "a@a.com", mdp: "secret", pseudo: "p" });
     expect(res.status).toBe(409);
     expect(res.body.error).toBe("Email déjà utilisé");
   });
@@ -56,10 +57,11 @@ describe("POST /auth/login", () => {
   });
 
   it("retourne 200 et un token si ok", async () => {
+    const hashedMdp = await bcrypt.hash("pass", 10);
     vi.mocked(findByEmail).mockReturnValue({
       id: "1",
       email: "u@u.com",
-      mdp: "pass",
+      mdp: hashedMdp,
       pseudo: "u",
     } as any);
     const res = await request(app)
