@@ -5,6 +5,7 @@ import type { User } from "../types";
 import { Link, useParams } from 'react-router-dom';
 import type { Post } from '../types/index';
 import { PostService } from '../services/post.services.js';
+import { LockKeyholeIcon, LockKeyholeOpenIcon } from 'lucide-react';
 import "./ProfilePage.css"
 
 
@@ -106,8 +107,7 @@ const hanleFollow = async () => {
 
           <div className="profileInfos">
             <div className="profileTopRow">
-              <h2>{profile.pseudo}</h2>
-
+              <h2>{profile.pseudo} {isPrivate ? <LockKeyholeIcon size={18}/> : <LockKeyholeOpenIcon size={18}/>}</h2>
               <div className="profileActions">
                 {isMyProfile ? (
                   <button className="btn secondary" onClick={handleOpenEdit}>Edit</button>
@@ -118,6 +118,10 @@ const hanleFollow = async () => {
                 )}
               </div>
             </div>
+
+            {isMyProfile && (
+              <p style={{ margin: '5px 0', color: '#666' }}>{profile.email}</p>
+            )}
 
             <div className="profileStats">
               <p><b>{posts.length}</b> Posts</p>
